@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-board-app-deployment
+  labels:
+    app: kanban-board-app
+spec:
+  selector:
+    matchLabels:
+      app: kanban-board-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: kanban-board-app
+    spec:
+      containers:
+        - name: kanban-board-app
+          image: lokeswaranaruljothy/kanban-board-app:v1.0
+          ports:
+            - containerPort: 3000
