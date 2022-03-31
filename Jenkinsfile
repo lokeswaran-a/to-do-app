@@ -6,6 +6,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
+        echo "BUILD"
         sh 'docker build -t lokeswaranaruljothy/kanban-board-app:latest .'
       }
     }
