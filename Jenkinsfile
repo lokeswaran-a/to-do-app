@@ -10,7 +10,7 @@ pipeline {
   
     stage('Build') {
       steps {
-        echo "BUILD"
+        echo "<==============================BUILD====================================>"
         sh 'docker build -t lokeswaranaruljothy/kanban-board-app:latest .'
       }
     }
@@ -23,18 +23,20 @@ pipeline {
 
     stage('Push') {
       steps {
+        echo "<==============================PUSH====================================>"
         sh 'docker push lokeswaranaruljothy/kanban-board-app:latest'
       }
     }
 
-    stage('Test') {
-      steps {
-        sh 'npm i react-scripts'
-        sh 'yarn test'
-      }
-    }
+    // stage('Test') {
+    //   steps {
+    //     sh 'npm i react-scripts'
+    //     sh 'yarn test'
+    //   }
+    // }
     stage('Deploy') {
       steps {
+        echo "<==============================DEPLOY====================================>"
         sh 'kubectl apply -f infra/deployment.yaml -f infra/service.yaml'
         sh 'minikube service --url kanban-board-app-service'
         sh 'kubectl get pods'
