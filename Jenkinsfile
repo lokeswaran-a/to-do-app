@@ -27,7 +27,6 @@ pipeline {
         sh 'docker push lokeswaranaruljothy/kanban-board-app:latest'
       }
     }
-
     // stage('Test') {
     //   steps {
     //     sh 'npm i react-scripts'
