@@ -1,8 +1,5 @@
 pipeline {
   agent any
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('docker_hub_id')
-  }
   stages {
     stage('Build') {
       steps {
@@ -10,20 +7,22 @@ pipeline {
         sh 'docker build -t lokeswaranaruljothy/kanban-board-app:latest .'
       }
     }
-    stage('Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
     stage('Push') {
       steps {
         sh 'docker push lokeswaranaruljothy/kanban-board-app:latest'
       }
     }
-  }
-  post {
-    always {
-      sh 'docker logout'
+    stage('Test') {
+      steps {
+        echo 'Run Test...'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        sh 'kubectl apply -f infra/deployment.yaml -f infra/service.yaml'
+        sh 'minikube service --url kanban-board-app-service'
+        sh 'kubectl get pods'
+      }
     }
   }
 }
