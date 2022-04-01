@@ -29,6 +29,7 @@ pipeline {
 
     stage('Test') {
       steps {
+        sh 'npm i react-scripts'
         sh 'yarn test'
       }
     }
